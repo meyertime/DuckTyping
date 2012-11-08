@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project DefaultTargets="CompletePackage" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration>Release</Configuration>
+    <RootBuildPath>$(MSBuildProjectDirectory)\Build</RootBuildPath>
+    <BinariesPath>$(RootBuildPath)\Binaries</BinariesPath>
+
+    <ExternalPath>$(MSBuildProjectDirectory)\External</ExternalPath>
+    <ExternalAssembliesPath>$(ExternalPath)\Assemblies</ExternalAssembliesPath>
+    <ExternalToolsPath>$(ExternalPath)\Tools</ExternalToolsPath>
+
+    <MSBuildCommunityTasksPath>$(ExternalToolsPath)\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
+    <NCoverExplorerExtras>$(ExternalToolsPath)\NCoverExplorerExtras</NCoverExplorerExtras>
+
+    <NUnitPath>$(ExternalToolsPath)\NUnit</NUnitPath>
+    <NCoverPath>$(ExternalToolsPath)\NCover</NCoverPath>
+    <NCoverExplorerPath>$(ExternalToolsPath)\NCoverExplorer</NCoverExplorerPath>
+  </PropertyGroup>
+
+  <Import Project="$(ExternalToolsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+  <Import Project="$(NCoverExplorerExtras)\NCoverExplorer.MSBuildTasks.targets" />
+
+  <ItemGroup>
+    <ChildProject Include="DeftTech.DuckTyping\DeftTech.DuckTyping.csproj" />
+    <ChildProject Include="DeftTech.DuckTyping.Tests\DeftTech.DuckTyping.Tests.csproj" />
+  </ItemGroup>
+
+  <!--ItemGroup>
+    <RequiredConfigFile Include="$(MSBuildProjectDirectory)\GCCIntegration\App.config" />
+ </ItemGroup-->
+
+  <Target Name="MasterClean">
+    <Delete Files="$(RootBuildPath)\**" />
+
+    <RemoveDir Directories="$(RootBuildPath)" ContinueOnError="false" />
+    <RemoveDir Directories="%(ChildProject.RelativeDir)bin" ContinueOnError="false" />
+    <RemoveDir Directories="%(ChildProject.RelativeDir)obj" ContinueOnError="false" />
+  </Target>
+
+  <Target Name="MasterBuild" DependsOnTargets="MasterClean">
+    <MakeDir Directories="$(RootBuildPath);$(BinariesPath)" />
+
+    <MSBuild
+				Projects="@(ChildProject)"
+				Properties="OutputPath=$(BinariesPath);Configuration=$(Configuration)"
+        Targets="Build" />
+  </Target>
+
+  <ItemGroup>
+    <TestAssemblies Include="DeftTech.DuckTyping.Tests.dll" />
+
+    <CoverageAssemblies Include="DeftTech.DuckTyping.dll" />
+
+    <!--ExcludeCoverageReporting Include="Assembly|Namespace|Class">
+			<FilterExpression>{Regular Expression}</FilterExpression>
+		</ExcludeCoverageReporting-->
+  </ItemGroup>
+
+  <Target Name="MasterUnitTest" DependsOnTargets="MasterBuild">
+    <NCover
+			ToolPath="$(NCoverPath)"
+			CommandLineExe="$(NUnitPath)\nunit-console.exe"
+			CommandLineArgs="@(TestAssemblies -> '$(BinariesPath)\%(Filename)%(Extension)') /xml=$(RootBuildPath)\UnitTestResults.xml /framework=v2.0.50727"
+			CoverageFile="$(RootBuildPath)\CodeCoverage.xml"
+			LogFile="$(RootBuildPath)\CodeCoverage.log"
+			WorkingDirectory="$(BinariesPath)"
+			Assemblies="@(CoverageAssemblies)" />
+
+  </Target>
+
+  <Target Name="MasterCoverageValidation" DependsOnTargets="MasterUnitTest" >
+    <NCoverExplorer
+      ToolPath="$(NCoverExplorerPath)"
+      ProjectName="DeftTech.DuckTyping"
+      ReportType="3"
+      OutputDir="$(RootBuildPath)"
+      XmlReportName="CodeCoverageSummary.xml"
+      HtmlReportName="CodeCoverageSummary.html"
+      ShowExcluded="False"
+      SatisfactoryCoverage="85"
+      FailMinimum="true"
+      CoverageFiles="$(RootBuildPath)\CodeCoverage.xml"
+      Exclusions="@(ExcludeCoverageReporting -> '&lt;CoverageExclusion&gt;&lt;ExclusionType&gt;%(Identity)&lt;/ExclusionType&gt;&lt;Pattern&gt;%(FilterExpression)&lt;/Pattern&gt;&lt;IsRegex&gt;true&lt;/IsRegex&gt;&lt;/CoverageExclusion&gt;', '')" />
+  </Target>
+
+  <Target Name="CompletePackage" DependsOnTargets="MasterCoverageValidation" />
+</Project>

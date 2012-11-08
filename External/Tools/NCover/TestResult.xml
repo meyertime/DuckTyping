@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="D:\Development\DuckTyping\Build\Binaries\DeftTech.DuckTyping.Tests.dll" total="14" failures="0" not-run="0" date="2012-11-07" time="23:58:46">
+  <environment nunit-version="2.4.1.0" clr-version="2.0.50727.5456" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="D:\Development\DuckTyping\External\Tools\NCover" machine-name="DEFTM4" user="dave" user-domain="MEYERHOME" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite name="D:\Development\DuckTyping\Build\Binaries\DeftTech.DuckTyping.Tests.dll" success="True" time="0.184" asserts="0">
+    <results>
+      <test-suite name="DeftTech" success="True" time="0.180" asserts="0">
+        <results>
+          <test-suite name="DuckTyping" success="True" time="0.180" asserts="0">
+            <results>
+              <test-suite name="Tests" success="True" time="0.176" asserts="0">
+                <results>
+                  <test-suite name="DuckTypingTestFixture" success="True" time="0.137" asserts="0">
+                    <results>
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestCanCast" executed="True" success="True" time="0.084" asserts="13" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestDelegateCast" executed="True" success="True" time="0.011" asserts="6" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestEnumCast" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestGenericVarianceCast" executed="True" success="True" time="0.002" asserts="0" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestInterfaceCast" executed="True" success="True" time="0.003" asserts="4" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestInterfaceProxyEquals" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestInterfaceProxyEvent" executed="True" success="True" time="0.005" asserts="6" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestInterfaceProxyGenericMethod" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestInterfaceProxyMethod" executed="True" success="True" time="0.002" asserts="8" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestInterfaceProxyMethodVariance" executed="True" success="True" time="0.004" asserts="9" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestInterfaceProxyProperty" executed="True" success="True" time="0.002" asserts="3" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestInterfaceProxyToString" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestPrepareCast" executed="True" success="True" time="0.004" asserts="2" />
+                      <test-case name="DeftTech.DuckTyping.Tests.DuckTypingTestFixture.TestStaticInterfaceCast" executed="True" success="True" time="0.005" asserts="3" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
