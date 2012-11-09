@@ -1,7 +1,6 @@
 Duck Typing Library
 
 Copyright (C) 2007 David Meyer
-All Rights Reserved
 
 Website: http://www.deftflux.net/
 E-mail: deftflux@deftflux.net

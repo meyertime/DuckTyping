@@ -57,19 +57,25 @@
   </ItemGroup>
 
   <Target Name="MasterUnitTest" DependsOnTargets="MasterBuild">
-    <NCover
+    <NUnit 
+      ToolPath="$(NUnitPath)" 
+      Assemblies="@(TestAssemblies -> '$(BinariesPath)\%(Filename)%(Extension)')"
+      OutputXmlFile="UnitTestResults.xml"
+      WorkingDirectory="$(RootBuildPath)" />
+    
+    <!--NCover
 			ToolPath="$(NCoverPath)"
 			CommandLineExe="$(NUnitPath)\nunit-console.exe"
 			CommandLineArgs="@(TestAssemblies -> '$(BinariesPath)\%(Filename)%(Extension)') /xml=$(RootBuildPath)\UnitTestResults.xml /framework=v2.0.50727"
 			CoverageFile="$(RootBuildPath)\CodeCoverage.xml"
 			LogFile="$(RootBuildPath)\CodeCoverage.log"
 			WorkingDirectory="$(BinariesPath)"
-			Assemblies="@(CoverageAssemblies)" />
+			Assemblies="@(CoverageAssemblies)" /-->
 
   </Target>
 
   <Target Name="MasterCoverageValidation" DependsOnTargets="MasterUnitTest" >
-    <NCoverExplorer
+    <!--NCoverExplorer
       ToolPath="$(NCoverExplorerPath)"
       ProjectName="DeftTech.DuckTyping"
       ReportType="3"
@@ -80,7 +86,7 @@
       SatisfactoryCoverage="85"
       FailMinimum="true"
       CoverageFiles="$(RootBuildPath)\CodeCoverage.xml"
-      Exclusions="@(ExcludeCoverageReporting -> '&lt;CoverageExclusion&gt;&lt;ExclusionType&gt;%(Identity)&lt;/ExclusionType&gt;&lt;Pattern&gt;%(FilterExpression)&lt;/Pattern&gt;&lt;IsRegex&gt;true&lt;/IsRegex&gt;&lt;/CoverageExclusion&gt;', '')" />
+      Exclusions="@(ExcludeCoverageReporting -> '&lt;CoverageExclusion&gt;&lt;ExclusionType&gt;%(Identity)&lt;/ExclusionType&gt;&lt;Pattern&gt;%(FilterExpression)&lt;/Pattern&gt;&lt;IsRegex&gt;true&lt;/IsRegex&gt;&lt;/CoverageExclusion&gt;', '')" /-->
   </Target>
 
   <Target Name="CompletePackage" DependsOnTargets="MasterCoverageValidation" />
